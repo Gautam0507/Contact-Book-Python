@@ -24,3 +24,13 @@ def modify_value(row_id:int, column_name:str, changed_value:str):
     cursor.execute(command, (changed_value, str(row_id)))
     connection.commit()
     connection.close()
+
+def fetch_all_records():
+    connection = sqlite3.connect("contacts.db")
+    cursor = connection.cursor()
+    command = '''SELECT rowid, * FROM contacts'''
+    cursor.execute(command)
+    data = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return data
