@@ -41,7 +41,7 @@ def fetch_all_records():
     return data
 
 
-def search_records(rowid:int = None, fname: str = None, lname: str = None, ph_no: str = None):
+def search_records(rowid: int = None, fname: str = None, lname: str = None, ph_no: str = None):
     connection = sqlite3.connect('contacts.db')
     cursor = connection.cursor()
     base_command = """SELECT rowid,* FROM contacts WHERE """
@@ -57,20 +57,20 @@ def search_records(rowid:int = None, fname: str = None, lname: str = None, ph_no
             where_conditions += f"last_name == '{lname}'"
             lname = None
         elif ph_no is not None:
-            where_conditions+=f"phone_number == '{ph_no}'"
+            where_conditions += f"phone_number == '{ph_no}'"
             ph_no = None
     if where_conditions:
         if rowid is not None:
             where_conditions += f" AND rowid == '{rowid}'"
             rowid = None
         if fname is not None:
-            where_conditions+=f" AND first_name == '{fname}'"
+            where_conditions += f" AND first_name == '{fname}'"
             fname = None
         if lname is not None:
-            where_conditions+=f" AND last_name == '{lname}'"
+            where_conditions += f" AND last_name == '{lname}'"
             lname = None
         if ph_no is not None:
-            where_conditions+=f" AND phone_number == '{ph_no}'"
+            where_conditions += f" AND phone_number == '{ph_no}'"
             ph_no = None
 
     command = base_command + where_conditions
