@@ -41,6 +41,17 @@ def fetch_all_records():
     return data
 
 
+def fetch_record(rowid):
+    connection = sqlite3.connect("contacts.db")
+    cursor = connection.cursor()
+    command = f"SELECT rowid, * FROM contacts WHERE rowid == '{rowid}'"
+    cursor.execute(command)
+    data = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return data
+
+
 def search_records(rowid: int = None, fname: str = None, lname: str = None, ph_no: str = None):
     connection = sqlite3.connect('contacts.db')
     cursor = connection.cursor()
@@ -73,10 +84,16 @@ def search_records(rowid: int = None, fname: str = None, lname: str = None, ph_n
             where_conditions += f" AND phone_number == '{ph_no}'"
             ph_no = None
 
-    command = base_command + where_conditions
-    print(command)
+    command = base_command + where_conditions + ';'
     cursor.execute(command)
     data = cursor.fetchall()
     connection.commit()
     connection.close()
-    return data
+    result = []
+    for i in data:
+        result.append(i[0])
+    return result
+
+
+if __name__ == "__main__":
+    pass
